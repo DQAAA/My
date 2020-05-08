@@ -152,7 +152,7 @@ void DFS(int first,int id,int cost,int fcost)
         if(isD[Next] == 0 && top < 5){
 			if(top == 1)DFS(first,Next,g[id][i].cost,g[id][i].cost);
 			else if(((double)g[id][i].cost)/cost >= 0.2 && ((double)g[id][i].cost)/cost <= 3){
-			if(top >= 4 && st[Next].find(stk[0]) == st[Next].end())continue;
+			if(top >= 3 && st[Next].find(stk[0]) == st[Next].end())continue;
 			DFS(first,Next,g[id][i].cost,fcost);}
         }
     }
@@ -180,9 +180,10 @@ void mktarget(int first,int second,int id,int step,int cost,int cost2)
 		int jie = g[id].size();
 		for(int i=0;i < jie;i++)
 		{
+			if(cost2 <= 5*g[id][i].cost && g[id][i].cost <= 3*cost2)
+				mktarget(first,id,g[id][i].to,step+1,cost,g[id][i].cost);
 			if(first < g[id][i].to || second < g[id][i].to || id < g[id][i].to || ismk[g[id][i].to] || cost2 > 5*g[id][i].cost || g[id][i].cost > 3*cost2)continue;
-			//st[first].insert(g[id][i].to);
-			mktarget(first,id,g[id][i].to,step+1,cost,g[id][i].cost);
+			//st[first].insert(g[id][i].to);mktarget(first,id,g[id][i].to,step+1,cost,g[id][i].cost);
 			if(!itv[first]){
 				itv[first] = target.size()+1;
 				unordered_map<int,vector<B>> a;
